@@ -3,6 +3,10 @@
 
 .vscode/*
 .python_version
+blog.txt
+git.txt
+http_requests.txt
+.env
 
 ### Flask ###
 instance/*
