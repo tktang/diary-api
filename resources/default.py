@@ -1,7 +1,5 @@
 
-from flask_restful import Resource
-
-from api.app import api
+from flask_restful import Api, Resource
 
 
 class DefaultResource(Resource):
@@ -16,6 +14,4 @@ class DefaultResource(Resource):
             }
         }
 
-
-api.add_resource(DefaultResource, "/", endpoint="home")
 
