@@ -10,7 +10,7 @@ class DefaultResource(Resource):
         return {
             "status": "success",
             "data": {
-                "msg": "Welcome to our diary API"
+                "msg": "Welcome to our diary API, let's get started"
             }
         }
 
