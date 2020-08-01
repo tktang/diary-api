@@ -8,7 +8,6 @@ db = SQLAlchemy()
 
 
 
-
 class BaseModel(db.Model):
     """Define the base model for all other models."""
 

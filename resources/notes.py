@@ -9,6 +9,7 @@ from api.models import Note, User
 
 
 class NoteListResource(Resource):
+    """Get all notes and create a new note"""
     @jwt_required
     def get(self, user_notes=None):
         current_user = get_jwt_identity()
