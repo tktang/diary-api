@@ -1,1 +1,1 @@
-from . import (default,user)
+from . import (default,notes,user)

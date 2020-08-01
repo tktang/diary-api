@@ -3,7 +3,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
-
 db = SQLAlchemy()
 
 
@@ -51,6 +50,7 @@ class User(BaseModel):
     username = db.Column(db.String(80), nullable=False, unique=True)
     email = db.Column(db.String(200), nullable=False, unique=True)
     password = db.Column(db.String(200),nullable=False)
+    note = db.relationship('Note', backref='user')
     
     
     @classmethod
@@ -70,3 +70,31 @@ class User(BaseModel):
 
 
 
+class Note(BaseModel):
+    __tablename__ = 'note'
+
+    title = db.Column(db.String(100), nullable=False)
+    notes = db.Column(db.String(1000))
+    publish = db.Column(db.Boolean(), default=False)
+    user_id = db.Column(db.Integer(), db.ForeignKey("user.id"),nullable=False)
+
+    def data(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'notes': self.notes,
+            'user_id': self.user_id
+        }
+
+    @classmethod
+    def get_all_published(cls):
+        return cls.query.filter_by(publish=True).all()
+
+    @classmethod
+    def get_all_drafts(cls):
+        return cls.query.filter_by(publish=False).all()
+
+
+    @classmethod
+    def get_by_id(cls, note_id):
+        return cls.query.filter_by(id=note_id).first()
