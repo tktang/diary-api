@@ -1,69 +1,59 @@
 import re
 from http import HTTPStatus
 
+from flask import request
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 get_jwt_identity, get_raw_jwt, jwt_optional,
                                 jwt_refresh_token_required, jwt_required)
 from flask_restful import Api, Resource
+from marshmallow import ValidationError
 from webargs import validate
 from webargs.fields import Email, Str
-from webargs.flaskparser import use_kwargs
+from webargs.flaskparser import use_args, use_kwargs
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from api.models import User
+from api.schemas import user_schema
 
 api= Api()
 
 
 black_list = set()
 
-PASSWORD_VALIDATION = validate.Regexp(
-    "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*).{7,16}$",
-    error="Password must contain at least one letter, at"
-    " least one number, be longer than six charaters "
-    "and shorter than 16.")
-
 
 
 class UserRegistrationResource(Resource):
     """Define endpoints for user registration."""
 
-    form_validation = {
-        "username":Str(required=True,location="json"),
-        "email":  Email(required=True, location="json"),
-        "password":Str(required=True, location="json",validate=PASSWORD_VALIDATION)
-        
-    }
-
-    @use_kwargs(form_validation)
-    def post(self, username, email, password):
+  
+    def post(self):
         """Create new  user."""
+        json_input = request.get_json()
+
+        try:
+            data = user_schema.load(json_input)
+        except ValidationError as err:
+            return {"errors": err.messages}, 422
         
         # Check if use and email exist before creation
 
-        if User.get_by_username(username):
+        if User.get_by_username(data['username']):
             return {'message': 'username already exist'}, HTTPStatus.BAD_REQUEST
 
-        if User.get_by_email(email):
+        if User.get_by_email(data['email']):
             return {'message': 'email already exist'}, HTTPStatus.BAD_REQUEST
 
-        password= generate_password_hash(password)
+        
 
-        user = User(
-            username=username,
-            email=email,
-            password=password
-        )
-
+        user = User(**data)
         user.save()
 
-        data = {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email
-        }
-
+        data = user_schema.dump(user)
+        data["message"] = "Successfully created a new user"
         return data, HTTPStatus.CREATED
+
+
+       
         
 
 
@@ -150,6 +140,4 @@ class RevokeAccessTokenResource(Resource):
             return {'message': 'Successfully logged out'}, HTTPStatus.OK
         return {"message":"Something bad occurred while trying to log you out"
             }, HTTPStatus.BAD_REQUEST
-
-
 
