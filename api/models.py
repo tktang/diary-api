@@ -50,6 +50,10 @@ class User(BaseModel):
     email = db.Column(db.String(200), nullable=False, unique=True)
     password = db.Column(db.String(200),nullable=False)
     note = db.relationship('Note', backref='user')
+    confirmed = db.Column(db.Boolean(), default=False)
+    confirmed_on = db.Column(db.DateTime, nullable=True)
+
+    
     
     
     @classmethod
