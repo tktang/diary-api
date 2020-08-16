@@ -10,6 +10,7 @@ from api.models import Note, User
 
 class NoteListResource(Resource):
     """Get all notes and create a new note"""
+
     @jwt_required
     def get(self, user_notes=None):
         current_user = get_jwt_identity()
@@ -26,6 +27,7 @@ class NoteListResource(Resource):
 
             return {"data": data}, HTTPStatus.OK
         return {"msg": "no notes available"}, HTTPStatus.BAD_REQUEST
+
     @use_kwargs(
         {
             "title": Str(required=True, location="json"),
@@ -38,6 +40,7 @@ class NoteListResource(Resource):
         current_user = get_jwt_identity()
         note = Note(title=title, notes=notes, user_id=current_user)
         saved_notes = note.save()
+        
         return (
             {
                 "msg": "successfully created notes",
@@ -49,7 +52,6 @@ class NoteListResource(Resource):
             },
             HTTPStatus.CREATED,
         )
-
 
 
 class NoteResource(Resource):
@@ -119,7 +121,6 @@ class NotePublishResource(Resource):
         note.save()
 
         return {"msg": "your note has been published succesfully"}, HTTPStatus.OK
-
 
 
 class DraftNoteListResource(Resource):

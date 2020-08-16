@@ -1,6 +1,9 @@
+import os
 import re
+
 from http import HTTPStatus
 
+from flask import current_app, render_template, request, url_for
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 get_jwt_identity, get_raw_jwt, jwt_optional,
                                 jwt_refresh_token_required, jwt_required)
@@ -8,14 +11,24 @@ from flask_restful import Api, Resource
 from webargs import validate
 from webargs.fields import Email, Str
 from webargs.flaskparser import use_kwargs
+from werkzeug.datastructures import FileStorage
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
+
 
 from api.models import User
-
+from api.config import basedir
 api= Api()
 
 
 black_list = set()
+
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif','svg','bmp'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
 
 PASSWORD_VALIDATION = validate.Regexp(
     "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*).{7,16}$",
@@ -24,6 +37,8 @@ PASSWORD_VALIDATION = validate.Regexp(
     "and shorter than 16.")
 
 
+
+UPLOADED_IMAGES_DEST = os.path.join(basedir, 'static/images')
 
 class UserRegistrationResource(Resource):
     """Define endpoints for user registration."""
@@ -152,4 +167,34 @@ class RevokeAccessTokenResource(Resource):
             }, HTTPStatus.BAD_REQUEST
 
 
+
+
+class UserDisplayPictureResource(Resource):
+
+    @jwt_required
+    def put(self):
+
+        file = request.files['file']
+        # Check if the file is one of the allowed types/extensions
+
+        if isinstance(file, FileStorage) and allowed_file(file.filename):
+        # Make the filename safe, remove unsupported chars
+            filename = secure_filename(file.filename)
+            user = User.get_by_id(id=get_jwt_identity())
+            
+            mimetype = file.content_type
+            
+            
+            user = User.get_by_id(id=get_jwt_identity())
+            
+            destination = file.save(os.path.join(current_app.config['UPLOADED_IMAGES_DEST'], user.username, 'images', filename))
+    
+
+
+            user.display_image = destination
+            user.save()
+
+            return { "msg": "uploaded image successfully"},HTTPStatus.OK
+
+        return {'message': 'File type not allowed, upload png, jpeg, svg files'}, HTTPStatus.BAD_REQUEST
 

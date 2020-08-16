@@ -3,6 +3,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from flask_restful import Api
+
 from webargs.flaskparser import abort, parser
 from werkzeug import exceptions
 
@@ -14,10 +15,11 @@ from resources.notes import (DraftNoteListResource, NoteListResource,
 from resources.user import (RefreshAccessTokenResource,
                             RevokeAccessTokenResource, UserInfoResource,
                             UserLoginResource, UserRegistrationResource,
-                            black_list)
+                            black_list,UserDisplayPictureResource)
 from utils import errors
 
 api = Api()
+
 
 jwt = JWTManager()
 
@@ -43,6 +45,8 @@ def create_app(config_name):
     def check_if_token_in_blacklist(decrypted_token):
         jti = decrypted_token["jti"]
         return jti in black_list
+
+
 
     app.register_error_handler(exceptions.NotFound, errors.handle_404_errors)
 
@@ -91,6 +95,10 @@ api.add_resource(
 api.add_resource(
     RevokeAccessTokenResource, "/v1/user/signout_access/", endpoint="signout_access"
 )
+api.add_resource(
+    UserDisplayPictureResource, "/v1/user/display_image/", endpoint="display_image"
+)
+
 
 # register our urls for note module
 api.add_resource(NoteListResource, "/v1/notes/", endpoint="notes")
@@ -99,6 +107,7 @@ api.add_resource(
     NotePublishResource, "/v1/publish_note/<int:note_id>", endpoint="publish_note"
 )
 api.add_resource(DraftNoteListResource, "/v1/notes/draft/", endpoint="draft")
+
 
 # register url for default
 
