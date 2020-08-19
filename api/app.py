@@ -10,22 +10,12 @@ from werkzeug import exceptions
 from api.config import env_config
 from api.models import db
 from resources.default import DefaultResource
-from resources.notes import (
-    DraftNoteListResource,
-    NoteListResource,
-    NotePublishResource,
-    NoteResource,
-)
-from resources.user import (
-    ForgotPasswordResource,
-    RefreshAccessTokenResource,
-    RevokeAccessTokenResource,
-    UserActivateResource,
-    UserInfoResource,
-    UserLoginResource,
-    UserRegistrationResource,
-    black_list,
-)
+from resources.notes import (DraftNoteListResource, NoteListResource,
+                             NotePublishResource, NoteResource)
+from resources.user import (RefreshAccessTokenResource, ResetPasswordResource,
+                            RevokeAccessTokenResource, UserActivateResource,
+                            UserInfoResource, UserLoginResource, ForgotPasswordResource,
+                            UserRegistrationResource, black_list)
 from utils import errors
 
 api = Api()
@@ -106,7 +96,8 @@ api.add_resource(
     RevokeAccessTokenResource, "/v1/user/signout_access/", endpoint="signout_access"
 )
 api.add_resource(UserActivateResource, "/users/activate/<string:token>")
-api.add_resource(ForgotPasswordResource, "/users/reset_password/<string:token>")
+api.add_resource(ResetPasswordResource, "/users/reset_password/<string:token>")
+api.add_resource(ForgotPasswordResource, "/users/forgot_password/")
 
 # register our urls for note module
 api.add_resource(NoteListResource, "/v1/notes/", endpoint="notes")
