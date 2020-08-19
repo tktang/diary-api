@@ -1,6 +1,7 @@
 from flasgger import Swagger
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_restful import Api
 
@@ -16,12 +17,18 @@ from resources.user import (RefreshAccessTokenResource,
                             RevokeAccessTokenResource, UserInfoResource,
                             UserLoginResource, UserRegistrationResource,
                             black_list,UserDisplayPictureResource)
+from resources.user import (RefreshAccessTokenResource, ResetPasswordResource,
+                            RevokeAccessTokenResource, UserActivateResource,
+                            UserInfoResource, UserLoginResource, ForgotPasswordResource,
+                            UserRegistrationResource, black_list)
 from utils import errors
 
 api = Api()
 
 
 jwt = JWTManager()
+
+mail = Mail()
 
 
 def create_app(config_name):
@@ -37,6 +44,7 @@ def create_app(config_name):
     Migrate(app, db)  # new code here
     # register api
     api.init_app(app)
+    mail.init_app(app)
     Swagger(app)
 
     jwt.init_app(app)
@@ -99,6 +107,9 @@ api.add_resource(
     UserDisplayPictureResource, "/v1/user/display_image/", endpoint="display_image"
 )
 
+api.add_resource(UserActivateResource, "/users/activate/<string:token>")
+api.add_resource(ResetPasswordResource, "/users/reset_password/<string:token>")
+api.add_resource(ForgotPasswordResource, "/users/forgot_password/")
 
 # register our urls for note module
 api.add_resource(NoteListResource, "/v1/notes/", endpoint="notes")

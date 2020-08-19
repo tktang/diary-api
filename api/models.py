@@ -51,6 +51,10 @@ class User(BaseModel):
     password = db.Column(db.String(200),nullable=False)
     note = db.relationship('Note', backref='user')
     display_image = db.Column(db.String(100), default=None)
+    confirmed = db.Column(db.Boolean(), default=False)
+    confirmed_on = db.Column(db.DateTime, nullable=True)
+
+    
     
     
     @classmethod
