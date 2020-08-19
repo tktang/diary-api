@@ -3,25 +3,21 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-
-
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    JWT_ERROR_MESSAGE_KEY = 'message'
-    JWT_BLACKLIST_ENABLED = True   
-    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
+    JWT_ERROR_MESSAGE_KEY = "message"
+    JWT_BLACKLIST_ENABLED = True
+    JWT_BLACKLIST_TOKEN_CHECKS = ["access", "refresh"]
     JWT_ACCESS_TOKEN_EXPIRES = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 14400))
-    #mail setup
-    MAIL_SERVER = os.environ.get('MAIL_SERVER')    
-    MAIL_PORT = int(os.environ.get('MAIL_PORT')) 
-    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')   
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL')
-    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
-    SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
-
+    # mail setup
+    MAIL_SERVER = os.environ.get("MAIL_SERVER")
+    MAIL_PORT = int(os.environ.get("MAIL_PORT"))
+    MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS")
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER")
+    SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT")
 
     @staticmethod
     def init_app(app):
@@ -51,5 +47,5 @@ class ProductionConfig(Config):
 env_config = {
     "development": DevelopmentConfig,
     "testing": TestingConfig,
-    "production": ProductionConfig,
+    "production": ProductionConfig
 }
