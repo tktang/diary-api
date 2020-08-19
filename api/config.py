@@ -12,6 +12,10 @@ class Config:
     JWT_BLACKLIST_ENABLED = True   
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
     JWT_ACCESS_TOKEN_EXPIRES = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 14400))
+    UPLOAD_FOLDER =  os.path.join(basedir, 'upload')
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif','svg','bmp'])
+    MAX_CONTENT_LENGTH =  4 * 1024 * 1024
+
 
 
     @staticmethod

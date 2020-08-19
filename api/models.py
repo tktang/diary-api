@@ -50,6 +50,7 @@ class User(BaseModel):
     email = db.Column(db.String(200), nullable=False, unique=True)
     password = db.Column(db.String(200),nullable=False)
     note = db.relationship('Note', backref='user')
+    display_image = db.Column(db.String(100), default=None)
     
     
     @classmethod
@@ -97,3 +98,22 @@ class Note(BaseModel):
     @classmethod
     def get_by_id(cls, note_id):
         return cls.query.filter_by(id=note_id).first()
+
+
+
+
+
+
+
+# class FileUpload(BaseModel):
+#     """Defines the models for FileUpload table."""
+
+#     __tablename__ = "fileupload"
+#     name = db.Column(db.String(32), nullable=False)
+#     file = db.Column(db.LargeBinary, nullable=False)
+#     extension = db.Column(db.String(6))
+#     user_id = db.Column(db.Integer,
+#                            db.ForeignKey("user.id"),
+#                            nullable=False)
+
+   
