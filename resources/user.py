@@ -1,27 +1,13 @@
-import os
 import datetime
+import os
 import re
 from http import HTTPStatus
 
 from flask import current_app, render_template, request, url_for
-from flask_jwt_extended import (
-    create_access_token,
-    create_refresh_token,
-    get_jwt_identity,
-    get_raw_jwt,
-    jwt_optional,
-    jwt_refresh_token_required,
-    jwt_required,
-)
-from flask_jwt_extended import (
-    create_access_token,
-    create_refresh_token,
-    get_jwt_identity,
-    get_raw_jwt,
-    jwt_optional,
-    jwt_refresh_token_required,
-    jwt_required,
-)
+from flask_jwt_extended import (create_access_token, create_refresh_token,
+                                get_jwt_identity, get_raw_jwt, jwt_optional,
+                                jwt_refresh_token_required, jwt_required)
+from flask_mail import Mail, Message
 from flask_restful import Api, Resource
 from marshmallow import ValidationError
 from webargs import validate
@@ -33,10 +19,9 @@ from werkzeug.utils import secure_filename
 
 from api.models import User
 from api.schemas import UserSchema
+from log import logger
 from utils.email_token import confirm_token, generate_confirmation_token
 from utils.send_emails import send_email
-from flask_mail import Mail, Message
-
 
 api = Api()
 
@@ -45,6 +30,7 @@ user_schema = UserSchema()
 black_list = set()
 
 mail = Mail()
+log = logger(__name__)
 
 
 PASSWORD_VALIDATION = validate.Regexp(
@@ -77,6 +63,7 @@ class UserRegistrationResource(Resource):
     def post(self):
         """Create new  user."""
         json_input = request.get_json()
+
 
         try:
             data = user_schema.load(json_input)
@@ -138,27 +125,27 @@ class UserLoginResource(Resource):
         access_token = create_access_token(identity=user.id, fresh=True)
         refresh_token = create_refresh_token(identity=user.id)
 
-        return (
-            {"access_token": access_token, "refresh_token": refresh_token},
-            HTTPStatus.OK,
-        )
+        # return (
+        #     {"access_token": access_token, "refresh_token": refresh_token},
+        #     HTTPStatus.OK,
+        # )
 
-        # if user and check_password_hash(user.password, password):
-        #     return {
-        #         "status": "success",
-        #         "data": {
-        #             "user_id": user.id,
-        #             "email": user.email,
-        #             "access_token": create_access_token(identity=user.id, fresh=True),
-        #             "refresh_token": create_refresh_token(identity=user.id)
-        #         }
-        #     } , HTTPStatus.OK
-        # return {
-        #     "status": "fail",
-        #     "data": {
-        #         "msg": "Unable to authenticate user: Invalid credentials"
-        #     }
-        # }, HTTPStatus.UNAUTHORIZED
+        if user and check_password_hash(user.password, password):
+            return {
+                "status": "success",
+                "data": {
+                    "user_id": user.id,
+                    "email": user.email,
+                    "access_token": create_access_token(identity=user.id, fresh=True),
+                    "refresh_token": create_refresh_token(identity=user.id)
+                }
+            } , HTTPStatus.OK
+        return {
+            "status": "fail",
+            "data": {
+                "msg": "Unable to authenticate user: Invalid credentials"
+            }
+        }, HTTPStatus.UNAUTHORIZED
 
 
 class UserInfoResource(Resource):
@@ -174,8 +161,12 @@ class UserInfoResource(Resource):
                 "username": user.username,
                 "email": user.email,
             }
+            log.info(
+                f"Successfully gotten user information for  {user.username}."
+            )
 
             return data, HTTPStatus.OK
+        log.warning("Could not get the user information")
         return {"status": "fail"}, HTTPStatus.UNAUTHORIZED
 
 
@@ -226,15 +217,16 @@ class UserDisplayPictureResource(Resource):
             user = User.get_by_id(id=get_jwt_identity())
 
             # for further security checks
+            
             mimetype = uploaded_file.content_type
-            if mimetype not in current_app.config["ALLOWED_EXTENSIONS"]:
+            if mimetype not in current_app.config["ALLOWED_MIMETYPES_EXTENSIONS"]:
                 return (
                     {"message": "File type not allowed, upload png, jpeg, svg files"},
                     HTTPStatus.BAD_REQUEST,
                 )
-
-            target = os.path.join(
-                current_app.config["UPLOAD_FOLDER"], user.username, filename
+            
+            target = os.path.abspath(
+                current_app.config["UPLOAD_FOLDER"] + user.username + filename
             )
 
             uploaded_file.save(target)
@@ -242,7 +234,7 @@ class UserDisplayPictureResource(Resource):
             user.display_image = target
             user.save()
 
-            return {"msg": "uploaded image successfully"}, HTTPStatus.OK
+            return {"msg": "uploaded display image successfully"}, HTTPStatus.OK
 
         return (
             {"message": "An error occured"},
@@ -274,7 +266,7 @@ class UserActivateResource(Resource):
 
         user.save()
 
-        return {}, HTTPStatus.NO_CONTENT
+        return {"message": "The user account has been activated"}, HTTPStatus.OK
 
 
 class ForgotPasswordResource(Resource):
@@ -306,9 +298,11 @@ class ForgotPasswordResource(Resource):
 
 class ResetPasswordResource(Resource):
     @use_kwargs(
-        {"password": Str(location="json", required=True, validate=PASSWORD_VALIDATION)}
+        {"password": Str(location="json", required=True, validate=PASSWORD_VALIDATION),
+        "confirmation_password": Str(location="json", required=True, validate=PASSWORD_VALIDATION),
+        }
     )
-    def patch(self, token, password):
+    def patch(self, token, password, confirmation_password):
 
         email = confirm_token(token)
 
@@ -319,6 +313,10 @@ class ResetPasswordResource(Resource):
 
         if not user:
             return {"message": "User not found"}, HTTPStatus.NOT_FOUND
+
+        if password != confirmation_password:
+            return {"message": "The two password do not match"}, HTTPStatus.BAD_REQUEST
+
 
         if user.confirmed is True:
 

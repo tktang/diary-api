@@ -4,7 +4,6 @@ from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_restful import Api
-
 from webargs.flaskparser import abort, parser
 from werkzeug import exceptions
 
@@ -13,13 +12,10 @@ from api.models import db
 from resources.default import DefaultResource
 from resources.notes import (DraftNoteListResource, NoteListResource,
                              NotePublishResource, NoteResource)
-from resources.user import (RefreshAccessTokenResource,
-                            RevokeAccessTokenResource, UserInfoResource,
-                            UserLoginResource, UserRegistrationResource,
-                            black_list,UserDisplayPictureResource)
-from resources.user import (RefreshAccessTokenResource, ResetPasswordResource,
-                            RevokeAccessTokenResource, UserActivateResource,
-                            UserInfoResource, UserLoginResource, ForgotPasswordResource,
+from resources.user import (ForgotPasswordResource, RefreshAccessTokenResource,
+                            ResetPasswordResource, RevokeAccessTokenResource,
+                            UserActivateResource, UserDisplayPictureResource,
+                            UserInfoResource, UserLoginResource,
                             UserRegistrationResource, black_list)
 from utils import errors
 
