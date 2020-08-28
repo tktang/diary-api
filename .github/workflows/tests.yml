@@ -22,7 +22,9 @@ jobs:
     
     
     - name: export environment variables
-      run: export $SECRET_KEY  $TEST_DATABASE_URL
+      run: 
+        export SECRET_KEY=$SECRET_KEY  
+        export TEST_DATABASE_URL= $TEST_DATABASE_URL
       env:
         SECRET_KEY: ${{secrets.SECRET_KEY}}
         TEST_DATABASE_URL:  ${{secrets.TEST_DATABASE_URL}}
