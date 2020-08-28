@@ -22,8 +22,8 @@ jobs:
     
     - name: export environment variables
       run: |
-        export SECRET_KEY=${{secrets.SECRET_KEY}}
-        export TEST_DATABASE_URL=${{secrets.TEST_DATABASE_URL}}
+        echo SECRET_KEY=${{secrets.SECRET_KEY}}
+        echo TEST_DATABASE_URL=${{secrets.TEST_DATABASE_URL}}
        
     - name: Install dependencies
       run: |
@@ -33,6 +33,11 @@ jobs:
     - name: Test with unittest
       run: |
         python -m unittest
+
+
+        
+
+
 
 
 
