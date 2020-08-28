@@ -21,9 +21,13 @@ jobs:
         python-version: 3.8
     
     - name: export environment variables
+      env: |
+        SECRET_KEY : ${{secrets.SECRET_KEY}}
+        TEST_DATABASE_URL : ${{secrets.TEST_DATABASE_URL}}
+    - name: export environment variables
       run: |
-        echo SECRET_KEY=${{secrets.SECRET_KEY}}
-        echo TEST_DATABASE_URL=${{secrets.TEST_DATABASE_URL}}
+        echo SECRET_KEY
+        echo TEST_DATABASE_URL
        
     - name: Install dependencies
       run: |
