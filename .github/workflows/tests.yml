@@ -19,14 +19,14 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-    - shell: bash
-      env:
+    - name: set environment variables
+      with:
         SECRET_KEY: ${{secrets.SECRET_KEY}}
         TEST_DATABASE_URL: ${{secrets.TEST_DATABASE_URL}} 
-    - name: set environment variables
+    - name: export environment variables
       run: |
-         export SECRET_KEY="$SECRET_KEY"
-         export TEST_DATABASE_URL="$TEST_DATABASE_URL" 
+        export SECRET_KEY="$SECRET_KEY"
+        export TEST_DATABASE_URL="$TEST_DATABASE_URL" 
        
     - name: Install dependencies
       run: |
