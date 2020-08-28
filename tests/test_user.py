@@ -50,7 +50,7 @@ class UserTestCase(TestCase):
             data=json.dumps(payload),
         )
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(User.query.count(), 1)
         user = User.query.filter_by(username="oluchidfg").first()
         self.assertEqual(user.confirmed, False)
