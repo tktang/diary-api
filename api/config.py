@@ -1,7 +1,10 @@
+import logging
 import os
+from logging.handlers import SMTPHandler, RotatingFileHandler
+
+from flask import current_app
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
 
 
 class Config:
@@ -20,7 +23,7 @@ class Config:
 
     # mail setup
     MAIL_SERVER = os.environ.get("MAIL_SERVER")
-    # MAIL_PORT = int(os.environ.get("MAIL_PORT"))
+    # MAIL_PORT = int(os.environ.get("MAIL_PORT"))v v
     MAIL_PORT = 587
     MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS")
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
@@ -48,6 +51,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(basedir, "prod.sqlite")
@@ -55,23 +59,23 @@ class ProductionConfig(Config):
     @classmethod
     def init_app(cls, app):
         Config.init_app(app)
-
         # email errors to the administrators
-        import logging
-        from logging.handlers import SMTPHandler
 
-        credentials = None
-        secure = None
+        credentials = (
+            current_app.config["MAIL_USERNAME"],
+            current_app.config["MAIL_PASSWORD"],
+        )
+        mailhost = (current_app.config["MAIL_SERVER"], current_app.config["MAIL_PORT"])
+        secure = current_app.config["MAIL_USE_TLS"]
+        fromaddr = current_app.config["MAIL_DEFAULT_SENDER"]
         ADMINS = ["oluchiexample@com"]
-        if getattr(cls, "MAIL_USERNAME", None) is not None:
-            credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
-            if getattr(cls, "MAIL_USE_TLS", None):
-                secure = ()
+        subject = "Your Application Failed"
+
         mail_handler = SMTPHandler(
-            mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
-            fromaddr=cls.MAIL_DEFAULT_SENDER,
+            mailhost=mailhost,
+            fromaddr=fromaddr,
             toaddrs=ADMINS,
-            subject="Your Application Failed",
+            subject=subject,
             credentials=credentials,
             secure=secure,
         )
@@ -79,9 +83,23 @@ class ProductionConfig(Config):
         mail_handler.setFormatter(
             logging.Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
         )
+        app.logger.addHandler(mail_handler)
 
-        if not app.debug:
-            app.logger.addHandler(mail_handler)
+
+        #log to a file
+        if not os.path.exists('logs'):
+            os.mkdir('logs')
+        #limit the log size to 102MB
+        file_handler = RotatingFileHandler('logs/diary_app.log', maxBytes=102400,
+                                        backupCount=10)
+        file_handler.setFormatter(logging.Formatter(
+            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+        file_handler.setLevel(logging.INFO)
+        app.logger.addHandler(file_handler)
+
+        app.logger.setLevel(logging.INFO)
+        app.logger.info('Starting our diary API')
+
 
 
 env_config = {
