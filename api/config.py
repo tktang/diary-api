@@ -89,7 +89,7 @@ class ProductionConfig(Config):
         #log to a file
         if not os.path.exists('logs'):
             os.mkdir('logs')
-        #limit the log size to 102MB
+        #limit the log file size to 102MB
         file_handler = RotatingFileHandler('logs/diary_app.log', maxBytes=102400,
                                         backupCount=10)
         file_handler.setFormatter(logging.Formatter(
