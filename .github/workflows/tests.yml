@@ -21,7 +21,7 @@ jobs:
         python-version: 3.8
     
     - name: export environment variables
-      run: |
+      uses: 
         SECRET_KEY : ${{secrets.SECRET_KEY}}
         TEST_DATABASE_URL : ${{secrets.TEST_DATABASE_URL}}
     - name: export environment variables
