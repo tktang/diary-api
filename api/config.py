@@ -45,18 +45,20 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    SECRET_KEY="GGggjjjfk887856$%kk"
     # Disable CSRF protection in the testing configuration
     WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "test.sqlite")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("TEST_DATABASE_URL")
 
+
+class StagingConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get("STAGE_DATABASE_URL")
 
 
 class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL"
-    ) or "sqlite:///" + os.path.join(basedir, "prod.sqlite")
+    ) 
 
     @classmethod
     def init_app(cls, app):
@@ -86,26 +88,28 @@ class ProductionConfig(Config):
             logging.Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
         )
         app.logger.addHandler(mail_handler)
-
-
-        #log to a file
-        if not os.path.exists('logs'):
-            os.mkdir('logs')
-        #limit the log file size to 102MB
-        file_handler = RotatingFileHandler('logs/diary_app.log', maxBytes=102400,
-                                        backupCount=10)
-        file_handler.setFormatter(logging.Formatter(
-            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+        # log to a file
+        if not os.path.exists("logs"):
+            os.mkdir("logs")
+        # limit the log file size to 102MB
+        file_handler = RotatingFileHandler(
+            "logs/diary_app.log", maxBytes=102400, backupCount=10
+        )
+        file_handler.setFormatter(
+            logging.Formatter(
+                "%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"
+            )
+        )
         file_handler.setLevel(logging.INFO)
         app.logger.addHandler(file_handler)
 
         app.logger.setLevel(logging.INFO)
-        app.logger.info('Starting our diary API')
-
+        app.logger.info("Starting our diary API")
 
 
 env_config = {
     "development": DevelopmentConfig,
     "testing": TestingConfig,
     "production": ProductionConfig,
+    "staging": StagingConfig,
 }
