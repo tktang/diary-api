@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
+    <title>Coverage for api/app.py: 43%</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="jquery.isonscreen.js"></script>
+    <script type="text/javascript" src="coverage_html.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(coverage.pyfile_ready);
+    </script>
+</head>
+<body class="pyfile">
+<div id="header">
+    <div class="content">
+        <h1>Coverage for <b>api/app.py</b> :
+            <span class="pc_cov">43%</span>
+        </h1>
+        <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
+        <h2 class="stats">
+            58 statements &nbsp;
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">25 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">33 missing</button>
+            <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
+            <button type="button" class="par run show_par shortkey_p button_toggle_par" title="Toggle lines partially run">0 partial</button>
+        </h2>
+    </div>
+</div>
+<div class="help_panel">
+    <img id="panel_icon" src="keybd_open.png" alt="Hide keyboard shortcuts" />
+    <p class="legend">Hot-keys on this page</p>
+    <div>
+    <p class="keyhelp">
+        <span class="key">r</span>
+        <span class="key">m</span>
+        <span class="key">x</span>
+        <span class="key">p</span> &nbsp; toggle line displays
+    </p>
+    <p class="keyhelp">
+        <span class="key">j</span>
+        <span class="key">k</span> &nbsp; next/prev highlighted chunk
+    </p>
+    <p class="keyhelp">
+        <span class="key">0</span> &nbsp; (zero) top of page
+    </p>
+    <p class="keyhelp">
+        <span class="key">1</span> &nbsp; (one) first highlighted chunk
+    </p>
+    </div>
+</div>
+<div id="source">
+    <p id="t1" class="mis show_mis"><span class="n"><a href="#t1">1</a></span><span class="t"><span class="key">from</span> <span class="nam">flasgger</span> <span class="key">import</span> <span class="nam">Swagger</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t2" class="mis show_mis"><span class="n"><a href="#t2">2</a></span><span class="t"><span class="key">from</span> <span class="nam">flask</span> <span class="key">import</span> <span class="nam">Flask</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t3" class="mis show_mis"><span class="n"><a href="#t3">3</a></span><span class="t"><span class="key">from</span> <span class="nam">flask_jwt_extended</span> <span class="key">import</span> <span class="nam">JWTManager</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t4" class="mis show_mis"><span class="n"><a href="#t4">4</a></span><span class="t"><span class="key">from</span> <span class="nam">flask_mail</span> <span class="key">import</span> <span class="nam">Mail</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t5" class="mis show_mis"><span class="n"><a href="#t5">5</a></span><span class="t"><span class="key">from</span> <span class="nam">flask_migrate</span> <span class="key">import</span> <span class="nam">Migrate</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t6" class="mis show_mis"><span class="n"><a href="#t6">6</a></span><span class="t"><span class="key">from</span> <span class="nam">flask_restful</span> <span class="key">import</span> <span class="nam">Api</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t7" class="mis show_mis"><span class="n"><a href="#t7">7</a></span><span class="t"><span class="key">from</span> <span class="nam">webargs</span><span class="op">.</span><span class="nam">flaskparser</span> <span class="key">import</span> <span class="nam">abort</span><span class="op">,</span> <span class="nam">parser</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t8" class="mis show_mis"><span class="n"><a href="#t8">8</a></span><span class="t"><span class="key">from</span> <span class="nam">werkzeug</span> <span class="key">import</span> <span class="nam">exceptions</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t9" class="pln"><span class="n"><a href="#t9">9</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t10" class="mis show_mis"><span class="n"><a href="#t10">10</a></span><span class="t"><span class="key">from</span> <span class="nam">api</span><span class="op">.</span><span class="nam">config</span> <span class="key">import</span> <span class="nam">env_config</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t11" class="mis show_mis"><span class="n"><a href="#t11">11</a></span><span class="t"><span class="key">from</span> <span class="nam">api</span><span class="op">.</span><span class="nam">models</span> <span class="key">import</span> <span class="nam">db</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t12" class="mis show_mis"><span class="n"><a href="#t12">12</a></span><span class="t"><span class="key">from</span> <span class="nam">resources</span><span class="op">.</span><span class="nam">default</span> <span class="key">import</span> <span class="nam">DefaultResource</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t13" class="mis show_mis"><span class="n"><a href="#t13">13</a></span><span class="t"><span class="key">from</span> <span class="nam">resources</span><span class="op">.</span><span class="nam">notes</span> <span class="key">import</span> <span class="op">(</span><span class="nam">DraftNoteListResource</span><span class="op">,</span> <span class="nam">NoteListResource</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t14" class="pln"><span class="n"><a href="#t14">14</a></span><span class="t">                             <span class="nam">NotePublishResource</span><span class="op">,</span> <span class="nam">NoteResource</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t15" class="mis show_mis"><span class="n"><a href="#t15">15</a></span><span class="t"><span class="key">from</span> <span class="nam">resources</span><span class="op">.</span><span class="nam">user</span> <span class="key">import</span> <span class="op">(</span><span class="nam">ForgotPasswordResource</span><span class="op">,</span> <span class="nam">RefreshAccessTokenResource</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t16" class="pln"><span class="n"><a href="#t16">16</a></span><span class="t">                            <span class="nam">ResetPasswordResource</span><span class="op">,</span> <span class="nam">RevokeAccessTokenResource</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t17" class="pln"><span class="n"><a href="#t17">17</a></span><span class="t">                            <span class="nam">UserActivateResource</span><span class="op">,</span> <span class="nam">UserDisplayPictureResource</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t18" class="pln"><span class="n"><a href="#t18">18</a></span><span class="t">                            <span class="nam">UserInfoResource</span><span class="op">,</span> <span class="nam">UserLoginResource</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t19" class="pln"><span class="n"><a href="#t19">19</a></span><span class="t">                            <span class="nam">UserRegistrationResource</span><span class="op">,</span> <span class="nam">black_list</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t20" class="mis show_mis"><span class="n"><a href="#t20">20</a></span><span class="t"><span class="key">from</span> <span class="nam">utils</span> <span class="key">import</span> <span class="nam">errors</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t21" class="pln"><span class="n"><a href="#t21">21</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t22" class="mis show_mis"><span class="n"><a href="#t22">22</a></span><span class="t"><span class="nam">api</span> <span class="op">=</span> <span class="nam">Api</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t23" class="pln"><span class="n"><a href="#t23">23</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t24" class="pln"><span class="n"><a href="#t24">24</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t25" class="mis show_mis"><span class="n"><a href="#t25">25</a></span><span class="t"><span class="nam">jwt</span> <span class="op">=</span> <span class="nam">JWTManager</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t26" class="pln"><span class="n"><a href="#t26">26</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t27" class="mis show_mis"><span class="n"><a href="#t27">27</a></span><span class="t"><span class="nam">mail</span> <span class="op">=</span> <span class="nam">Mail</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t28" class="pln"><span class="n"><a href="#t28">28</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t29" class="pln"><span class="n"><a href="#t29">29</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t30" class="mis show_mis"><span class="n"><a href="#t30">30</a></span><span class="t"><span class="key">def</span> <span class="nam">create_app</span><span class="op">(</span><span class="nam">config_name</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t31" class="pln"><span class="n"><a href="#t31">31</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t32" class="run"><span class="n"><a href="#t32">32</a></span><span class="t">    <span class="key">import</span> <span class="nam">resources</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t33" class="pln"><span class="n"><a href="#t33">33</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t34" class="run"><span class="n"><a href="#t34">34</a></span><span class="t">    <span class="nam">app</span> <span class="op">=</span> <span class="nam">Flask</span><span class="op">(</span><span class="nam">__name__</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t35" class="pln"><span class="n"><a href="#t35">35</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t36" class="run"><span class="n"><a href="#t36">36</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">from_object</span><span class="op">(</span><span class="nam">env_config</span><span class="op">[</span><span class="nam">config_name</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t37" class="pln"><span class="n"><a href="#t37">37</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t38" class="run"><span class="n"><a href="#t38">38</a></span><span class="t">    <span class="nam">db</span><span class="op">.</span><span class="nam">init_app</span><span class="op">(</span><span class="nam">app</span><span class="op">)</span>  <span class="com"># Add db session, new code here</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t39" class="pln"><span class="n"><a href="#t39">39</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t40" class="run"><span class="n"><a href="#t40">40</a></span><span class="t">    <span class="nam">Migrate</span><span class="op">(</span><span class="nam">app</span><span class="op">,</span> <span class="nam">db</span><span class="op">)</span>  <span class="com"># new code here</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t41" class="pln"><span class="n"><a href="#t41">41</a></span><span class="t">    <span class="com"># register api</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t42" class="run"><span class="n"><a href="#t42">42</a></span><span class="t">    <span class="nam">api</span><span class="op">.</span><span class="nam">init_app</span><span class="op">(</span><span class="nam">app</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t43" class="run"><span class="n"><a href="#t43">43</a></span><span class="t">    <span class="nam">mail</span><span class="op">.</span><span class="nam">init_app</span><span class="op">(</span><span class="nam">app</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t44" class="run"><span class="n"><a href="#t44">44</a></span><span class="t">    <span class="nam">Swagger</span><span class="op">(</span><span class="nam">app</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t45" class="pln"><span class="n"><a href="#t45">45</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t46" class="run"><span class="n"><a href="#t46">46</a></span><span class="t">    <span class="nam">jwt</span><span class="op">.</span><span class="nam">init_app</span><span class="op">(</span><span class="nam">app</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t47" class="pln"><span class="n"><a href="#t47">47</a></span><span class="t">    <span class="com"># error handling</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t48" class="run"><span class="n"><a href="#t48">48</a></span><span class="t">    <span class="op">@</span><span class="nam">jwt</span><span class="op">.</span><span class="nam">token_in_blacklist_loader</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t49" class="run"><span class="n"><a href="#t49">49</a></span><span class="t">    <span class="key">def</span> <span class="nam">check_if_token_in_blacklist</span><span class="op">(</span><span class="nam">decrypted_token</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t50" class="run"><span class="n"><a href="#t50">50</a></span><span class="t">        <span class="nam">jti</span> <span class="op">=</span> <span class="nam">decrypted_token</span><span class="op">[</span><span class="str">"jti"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t51" class="run"><span class="n"><a href="#t51">51</a></span><span class="t">        <span class="key">return</span> <span class="nam">jti</span> <span class="key">in</span> <span class="nam">black_list</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t52" class="pln"><span class="n"><a href="#t52">52</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t53" class="pln"><span class="n"><a href="#t53">53</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t54" class="pln"><span class="n"><a href="#t54">54</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t55" class="run"><span class="n"><a href="#t55">55</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span><span class="nam">exceptions</span><span class="op">.</span><span class="nam">NotFound</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_404_errors</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t56" class="pln"><span class="n"><a href="#t56">56</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t57" class="run"><span class="n"><a href="#t57">57</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t58" class="pln"><span class="n"><a href="#t58">58</a></span><span class="t">        <span class="nam">exceptions</span><span class="op">.</span><span class="nam">InternalServerError</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_server_errors</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t59" class="pln"><span class="n"><a href="#t59">59</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t60" class="pln"><span class="n"><a href="#t60">60</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t61" class="run"><span class="n"><a href="#t61">61</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span><span class="nam">exceptions</span><span class="op">.</span><span class="nam">BadRequest</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_400_errors</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t62" class="pln"><span class="n"><a href="#t62">62</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t63" class="run"><span class="n"><a href="#t63">63</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span><span class="nam">FileNotFoundError</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_400_errors</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t64" class="pln"><span class="n"><a href="#t64">64</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t65" class="run"><span class="n"><a href="#t65">65</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span><span class="nam">TypeError</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_400_errors</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t66" class="pln"><span class="n"><a href="#t66">66</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t67" class="run"><span class="n"><a href="#t67">67</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span><span class="nam">KeyError</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_404_errors</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t68" class="pln"><span class="n"><a href="#t68">68</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t69" class="run"><span class="n"><a href="#t69">69</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span><span class="nam">AttributeError</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_400_errors</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t70" class="pln"><span class="n"><a href="#t70">70</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t71" class="run"><span class="n"><a href="#t71">71</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span><span class="nam">ValueError</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_400_errors</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t72" class="pln"><span class="n"><a href="#t72">72</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t73" class="run"><span class="n"><a href="#t73">73</a></span><span class="t">    <span class="nam">app</span><span class="op">.</span><span class="nam">register_error_handler</span><span class="op">(</span><span class="nam">AssertionError</span><span class="op">,</span> <span class="nam">errors</span><span class="op">.</span><span class="nam">handle_400_errors</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t74" class="pln"><span class="n"><a href="#t74">74</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t75" class="pln"><span class="n"><a href="#t75">75</a></span><span class="t">    <span class="com"># new code</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t76" class="run"><span class="n"><a href="#t76">76</a></span><span class="t">    <span class="op">@</span><span class="nam">parser</span><span class="op">.</span><span class="nam">error_handler</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t77" class="run"><span class="n"><a href="#t77">77</a></span><span class="t">    <span class="key">def</span> <span class="nam">handle_request_parsing_error</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t78" class="pln"><span class="n"><a href="#t78">78</a></span><span class="t">        <span class="nam">err</span><span class="op">,</span> <span class="nam">req</span><span class="op">,</span> <span class="nam">schema</span><span class="op">,</span> <span class="op">*</span><span class="op">,</span> <span class="nam">error_status_code</span><span class="op">,</span> <span class="nam">error_headers</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t79" class="pln"><span class="n"><a href="#t79">79</a></span><span class="t">    <span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t80" class="pln"><span class="n"><a href="#t80">80</a></span><span class="t">        <span class="str">"""webargs error handler that uses Flask-RESTful's abort function to return</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t81" class="pln"><span class="n"><a href="#t81">81</a></span><span class="t"><span class="str">        a JSON error response to the client.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t82" class="pln"><span class="n"><a href="#t82">82</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t83" class="mis show_mis"><span class="n"><a href="#t83">83</a></span><span class="t">        <span class="nam">abort</span><span class="op">(</span><span class="nam">error_status_code</span><span class="op">,</span> <span class="nam">errors</span><span class="op">=</span><span class="nam">err</span><span class="op">.</span><span class="nam">messages</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t84" class="pln"><span class="n"><a href="#t84">84</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t85" class="run"><span class="n"><a href="#t85">85</a></span><span class="t">    <span class="key">return</span> <span class="nam">app</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t86" class="pln"><span class="n"><a href="#t86">86</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t87" class="pln"><span class="n"><a href="#t87">87</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t88" class="pln"><span class="n"><a href="#t88">88</a></span><span class="t"><span class="com"># register our urls for user module</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t89" class="mis show_mis"><span class="n"><a href="#t89">89</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t90" class="pln"><span class="n"><a href="#t90">90</a></span><span class="t">    <span class="nam">UserRegistrationResource</span><span class="op">,</span> <span class="str">"/v1/user/register/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"user_registration"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t91" class="pln"><span class="n"><a href="#t91">91</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t92" class="mis show_mis"><span class="n"><a href="#t92">92</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">UserLoginResource</span><span class="op">,</span> <span class="str">"/v1/user/login/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"user_login"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t93" class="mis show_mis"><span class="n"><a href="#t93">93</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">UserInfoResource</span><span class="op">,</span> <span class="str">"/v1/user/user_info/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"user_info"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t94" class="pln"><span class="n"><a href="#t94">94</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t95" class="mis show_mis"><span class="n"><a href="#t95">95</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t96" class="pln"><span class="n"><a href="#t96">96</a></span><span class="t">    <span class="nam">RefreshAccessTokenResource</span><span class="op">,</span> <span class="str">"/v1/user/refresh_token/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"refresh_token"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t97" class="pln"><span class="n"><a href="#t97">97</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t98" class="pln"><span class="n"><a href="#t98">98</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t99" class="mis show_mis"><span class="n"><a href="#t99">99</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t100" class="pln"><span class="n"><a href="#t100">100</a></span><span class="t">    <span class="nam">RevokeAccessTokenResource</span><span class="op">,</span> <span class="str">"/v1/user/signout_access/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"signout_access"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t101" class="pln"><span class="n"><a href="#t101">101</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t102" class="mis show_mis"><span class="n"><a href="#t102">102</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t103" class="pln"><span class="n"><a href="#t103">103</a></span><span class="t">    <span class="nam">UserDisplayPictureResource</span><span class="op">,</span> <span class="str">"/v1/user/display_image/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"display_image"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t104" class="pln"><span class="n"><a href="#t104">104</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t105" class="pln"><span class="n"><a href="#t105">105</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t106" class="mis show_mis"><span class="n"><a href="#t106">106</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">UserActivateResource</span><span class="op">,</span> <span class="str">"/users/activate/&lt;string:token>"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t107" class="mis show_mis"><span class="n"><a href="#t107">107</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">ResetPasswordResource</span><span class="op">,</span> <span class="str">"/users/reset_password/&lt;string:token>"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t108" class="mis show_mis"><span class="n"><a href="#t108">108</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">ForgotPasswordResource</span><span class="op">,</span> <span class="str">"/users/forgot_password/"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t109" class="pln"><span class="n"><a href="#t109">109</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t110" class="pln"><span class="n"><a href="#t110">110</a></span><span class="t"><span class="com"># register our urls for note module</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t111" class="mis show_mis"><span class="n"><a href="#t111">111</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">NoteListResource</span><span class="op">,</span> <span class="str">"/v1/notes/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"notes"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t112" class="mis show_mis"><span class="n"><a href="#t112">112</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">NoteResource</span><span class="op">,</span> <span class="str">"/v1/notes/&lt;int:note_id>"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"note_id"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t113" class="mis show_mis"><span class="n"><a href="#t113">113</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t114" class="pln"><span class="n"><a href="#t114">114</a></span><span class="t">    <span class="nam">NotePublishResource</span><span class="op">,</span> <span class="str">"/v1/publish_note/&lt;int:note_id>"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"publish_note"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t115" class="pln"><span class="n"><a href="#t115">115</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t116" class="mis show_mis"><span class="n"><a href="#t116">116</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">DraftNoteListResource</span><span class="op">,</span> <span class="str">"/v1/notes/draft/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"draft"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t117" class="pln"><span class="n"><a href="#t117">117</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t118" class="pln"><span class="n"><a href="#t118">118</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t119" class="pln"><span class="n"><a href="#t119">119</a></span><span class="t"><span class="com"># register url for default</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t120" class="pln"><span class="n"><a href="#t120">120</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t121" class="mis show_mis"><span class="n"><a href="#t121">121</a></span><span class="t"><span class="nam">api</span><span class="op">.</span><span class="nam">add_resource</span><span class="op">(</span><span class="nam">DefaultResource</span><span class="op">,</span> <span class="str">"/"</span><span class="op">,</span> <span class="nam">endpoint</span><span class="op">=</span><span class="str">"home"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+</div>
+<div id="footer">
+    <div class="content">
+        <p>
+            <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.2.1</a>,
+            created at 2020-08-26 05:29 +0100
+        </p>
+    </div>
+</div>
+</body>
+</html>
