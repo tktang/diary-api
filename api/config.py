@@ -58,7 +58,7 @@ class StagingConfig(Config):
 class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DATABASE_URL"
+        "HEROKU_POSTGRESQL_RED_URL"
     ) 
 
     @classmethod
