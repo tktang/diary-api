@@ -4,7 +4,7 @@
 This is currently hosted on heroku, click [here](https://diaryrestapi.herokuapp.com/)
 ![Hosted API](heroku.png)
 
-The tutorial is structured into the following
+The tutorial is structured into the following on my blog
 
 > - [Structuring a Flask Restful project for production.](https://oluchiorji.com/structuring-a-flask-restful-api-for-production/)
 >  - [Creating Custom Error Pages and Handling Exceptions for Flask](https://oluchiorji.com/creating-custom-error-pages-and-handling-exceptions-for-flask/)
