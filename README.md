@@ -2,7 +2,7 @@
 ##### Building a note writing REST API (a diary app)
 
 This is currently hosted on heroku, click [here](https://diaryrestapi.herokuapp.com/)
-![Hosted API](heroku_image.png)
+![Hosted API](heroku.png)
 
 The tutorial is structured into the following
 
@@ -25,7 +25,7 @@ The tutorial is structured into the following
 - `pip install -r requirements.txt`
 
 
-### Add environment variables, copy the following below and add to .env file
+##### Add environment variables, create a new >env in your root folder directory , add the following
 - `FLASK_APP=main.py` 
 - `FLASK_DEBUG=1 `
 - `FLASK_ENV=development`
