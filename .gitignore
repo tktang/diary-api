@@ -7,7 +7,7 @@ blog.txt
 git.txt
 http_requests.txt
 .env
-
+tmp/
 ### Flask ###
 instance/*
 !instance/.gitignore
