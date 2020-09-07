@@ -25,7 +25,7 @@ The tutorial is structured into the following on my blog
 - `pip install -r requirements.txt`
 
 
-##### Add environment variables, create a new >env in your root folder directory , add the following
+##### Add environment variables, create a new .env in your root folder directory , add the following
 - `FLASK_APP=main.py` 
 - `FLASK_DEBUG=1 `
 - `FLASK_ENV=development`
