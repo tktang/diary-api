@@ -14,8 +14,8 @@ The tutorial is structured into the following on my blog
 > - [Email setup and confirmation](https://oluchiorji.com/email-set-up-and-confirmation/)
 > -  [Working with file upload](https://oluchiorji.com/handling-file-upload/)
 > - [Flask: Setting Up Tests and Logging.](https://oluchiorji.com/flask-setting-up-tests-and-logging/) 
-> - Set Up CI/CD with Github Actions for Flask  ( **tutorial coming soon**)
-> - Deploying our app on Heroku ( **tutorial coming soon**)
+> - [Set Up CI/CD with Github Actions for Flask ](https://oluchiorji.com/set-up-ci-cd-with-github-actions-for-flask/)
+> - [Deploying our app on Heroku ](https://oluchiorji.com/deploying-a-flask-app-on-heroku/)
 
 
 ### To set up the app locally on your system, do the following
